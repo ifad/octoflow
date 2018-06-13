@@ -1,0 +1,10 @@
+[program:{{ id }}_collector]
+process_name={{ id }}_collector
+autostart={{ autostart_instances }}
+autorestart={{ autorestart_instances }}
+startretries={{ startretries_instances }}
+startsecs=5
+stopsignal=KILL
+user=root
+group=root
+command={{ nprobe_bin_path }}/nprobe --collector-port {{ listen_port }} --all-collectors --collector {{ mux_to2|join(' --collector ') }}

@@ -1,0 +1,68 @@
+general:
+  base_confs_path: /etc/octoflow/confs
+  base_templates_path: /etc/octoflow/templates
+  base_systemd_path: /etc/systemd/system
+
+nprobe:
+  bin_path: /usr/local/bin
+  license_key: /path/to/license/key
+
+supervisor:
+  bin_path: /usr/local/bin
+  conf_path: /etc/octoflow
+  unix_socket: /tmp/octoflow.sock
+  logfile: /var/log/octoflow_server.log
+  log_maxMB: 50
+  log_max_backups: 10
+  loglevel: debug
+  minfds: 2048
+  minprocs: 1024
+  autostart_instances: true
+  autorestart_instances: true
+  startretries_instances: 5
+
+collectors:
+  -
+    id: 'foo'
+    listen_host: '192.168.0.100'
+    listen_port: 2055
+    nf_version: 10
+    mux_to:
+      - 'foo-cacti'
+      - 'bar-kibana'
+  -
+    id: 'quux'
+    listen_host: '192.168.0.100'
+    listen_port: 2056
+    nf_version: 10
+    mux_to:
+      - 'baz-graylog'
+
+exporters:
+  -
+    id: 'foo-cacti'
+    listen_host: '127.0.0.1'
+    listen_port: 40000
+    collector_host: 192.168.0.101
+    collector_port: 2055
+    collector_proto: udp
+    collector_version: 10
+    filters: [ '192.168.10.1', '!192.168.10.2' ]
+  -
+    id: 'bar-kibana'
+    listen_host: '127.0.0.1'
+    listen_port: 40001
+    collector_host: 10.31.33.7
+    collector_port: 2055
+    collector_proto: udp
+    collector_version: 10
+    filters: [ '192.168.10.0/24' ]
+  -
+    id: 'baz-graylog'
+    listen_host: '127.0.0.1'
+    listen_port: 40002
+    collector_host: 172.16.42.42
+    collector_port: 2055
+    collector_proto: udp
+    collector_version: 10
+    filters: [ '172.16.0.0/12', '!172.17.1.0/24' ]

@@ -1,0 +1,10 @@
+[program:{{ id }}_exporter]
+process_name={{ id }}_exporter
+autostart={{ autostart_instances }}
+autorestart={{ autorestart_instances }}
+startretries={{ startretries_instances }}
+startsecs=5
+stopsignal=KILL
+user=root
+group=root
+command={{ nprobe_bin_path }}/nprobe --collector-port {{ listen_port }} --collector {{ collector_proto }}://{{ collector_host }}:{{ collector_port }} -V {{ collector_version }} --collection-filter '{{ filters|join(',') }}'

@@ -1,0 +1,12 @@
+[Unit]
+Description=Octoflow Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/path/to/octoflow_server.py
+ExecReload=/path/to/octoflow_client.py --reload
+ExecStop=/path/to/octoflow_client.py --shutdown
+
+[Install]
+WantedBy=multi-user.target

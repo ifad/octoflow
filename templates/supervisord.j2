@@ -1,0 +1,43 @@
+[unix_http_server]
+file={{ unix_socket }}
+;chmod=0700
+;chown=nobody:nogroup
+;username=user
+;password=123
+
+;[inet_http_server]
+;port=127.0.0.1:9001
+;username=user
+;password=123
+
+[supervisord]
+logfile={{ logfile }}
+logfile_maxbytes={{ log_maxMB }}
+logfile_backups={{ log_max_backups }}
+loglevel=info
+pidfile=/tmp/supervisord.pid
+nodaemon=false
+minfds={{ minfds }}
+minprocs={{ minprocs }}
+;umask=022
+;user=root
+;identifier=supervisor
+;directory=/tmp
+;nocleanup=true
+;childlogdir=/tmp
+;environment=KEY=value
+;strip_ansi=false
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix://{{ unix_socket }}
+prompt=ifad_nf_mux
+history_file=/tmp/.octoflow.history
+;serverurl=http://127.0.0.1:9001
+;username=user
+;password=123
+
+[include]
+files=/etc/octoflow/confs/*/*.conf
