@@ -16,13 +16,7 @@ Here there is an example of the needed folder structure
 			/etc/octoflow/
 			├── confs
 			│   ├── collectors
-			│   │   ├── collector_02.conf
-			│   │   └── collector_02.conf
 			│   ├── exporters
-			│   │   ├── exporter_01.conf
-			│   │   ├── exporter_02.conf
-			│   │   └── exporter_03.conf
-			│   └── supervisor.conf
 			├── octoflow.yaml
 			└── templates
 			    ├── collector.j2

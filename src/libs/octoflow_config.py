@@ -183,8 +183,8 @@ class OctoflowConfigHandler(object):
       item['mux_to2'] = []
       for item2 in item['mux_to']:
         host, port = self.__search_exporter(item2, self.exporters_conf)
-        asd = 'udp://' + str(host)+':'+str(port)
-        item['mux_to2'].append(asd)
+        a = 'udp://' + str(host)+':'+str(port)
+        item['mux_to2'].append(a)
       instance_conf = self.__generate_conf_file(item, 'collector.j2')
       if self.__write_conf_file(instance_conf, str(self.collectors_confs_path+str(item['id']+'.conf'))) is not True:
         return False
@@ -198,30 +198,3 @@ class OctoflowConfigHandler(object):
     self.__clean_exporters_confs()
     self.__clean_collectors_confs()
     self.__clean_supervisor_conf()
-
-  '''
-  def refresh(self, conf_file_path):
-    """
-    Refresh configurations from specified file.
-
-    :param conf_file: path to octoflow.yaml (main configuration file).
-    :return: returns a success message in case the file exists and can be read. A failure message otherwise.
-    """
-    if self.check_env() == True:
-      if self.read(conf_file_path) == True:
-        if self.clean() == True:
-          if self.write() == True:
-            return True
-          else:
-            print("Error in Write sequence.")
-            return False
-        else:
-          print("Error in Clean sequence.")
-          return False
-      else:
-        print("Error in Read sequence.")
-        return False
-    else:
-      print("Error in Environment Check sequence.")
-      return False
-  '''
