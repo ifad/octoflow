@@ -1,6 +1,7 @@
 import yaml
 from jinja2 import Template, Environment, FileSystemLoader
 import logging
+import os
 
 
 class OctoflowConfigHandler(object):
@@ -126,6 +127,16 @@ class OctoflowConfigHandler(object):
     else:
       return False
 
+  def ensure_directory_exists(self, path):
+    try:
+      if not os.path.exists(path):
+        os.mkdir(path)
+      return True
+
+    except Exception as e:
+      self.logger.critical("Cannot create directory " + path + ": " + str(e))
+      return False
+
   def read(self, conf_file_path):
     """
     Read configurations from specified file and save in dict
@@ -159,6 +170,14 @@ class OctoflowConfigHandler(object):
 
           self.logger.debug("Generate templates paths")
           self.templates_path = str(self.general_conf['base_templates_path'])
+
+          # Create required directories if they do not exist
+          if not self.ensure_directory_exists(self.exporters_confs_path):
+            return False
+
+          if not self.ensure_directory_exists(self.collectors_confs_path):
+            return False
+
           return True
         else:
           return False
