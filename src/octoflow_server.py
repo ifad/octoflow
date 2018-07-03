@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 from libs.octoflow_config import OctoflowConfigHandler
 import os
 import argparse
