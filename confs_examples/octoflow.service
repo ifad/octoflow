@@ -3,7 +3,7 @@ Description=Octoflow Server
 After=network.target
 
 [Service]
-Type=simple
+Type=forking
 ExecStart=/path/to/octoflow_server.py
 ExecReload=/path/to/octoflow_client.py --reload
 ExecStop=/path/to/octoflow_client.py --shutdown
