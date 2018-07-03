@@ -2,6 +2,7 @@ import yaml
 from jinja2 import Template, Environment, FileSystemLoader
 import logging
 import os
+import glob
 
 
 class OctoflowConfigHandler(object):
@@ -137,6 +138,18 @@ class OctoflowConfigHandler(object):
       self.logger.critical("Cannot create directory " + path + ": " + str(e))
       return False
 
+  def clean_up_config_directory(self, path):
+    try:
+      paths = glob.glob(path + "/*.conf")
+      for path in paths:
+        os.remove(path)
+
+      return True
+
+    except Exception as e:
+      self.logger.critical("Cannot clean up configuration directory " + path + ": " + str(e))
+      return False
+
   def read(self, conf_file_path):
     """
     Read configurations from specified file and save in dict
@@ -171,12 +184,13 @@ class OctoflowConfigHandler(object):
           self.logger.debug("Generate templates paths")
           self.templates_path = str(self.general_conf['base_templates_path'])
 
-          # Create required directories if they do not exist
-          if not self.ensure_directory_exists(self.exporters_confs_path):
-            return False
+          # Create and clean up required directories
+          for directory in [ self.exporters_confs_path, self.collectors_confs_path ]:
+            if not self.ensure_directory_exists(directory):
+              return False
 
-          if not self.ensure_directory_exists(self.collectors_confs_path):
-            return False
+            if not self.clean_up_config_directory(directory):
+              return False
 
           return True
         else:
