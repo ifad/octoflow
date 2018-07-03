@@ -66,7 +66,7 @@ class OctoflowConfigHandler(object):
         f.write(data)
         return True
     except IOError as e:
-      self.logger.critical("Configuration file not accessible from the user")
+      self.logger.critical("Configuration file " + dest + " not accessible from the user")
       return False
 
   def __clean_conf(self, confs_path):
@@ -148,7 +148,7 @@ class OctoflowConfigHandler(object):
     try:
       with open(conf_file_path) as c:
         try:
-          self.logger.debug("Parsing octoflow.yaml configuration file")
+          self.logger.debug("Parsing configuration file at " + conf_file_path)
           conf_dict = yaml.load(c)
         except yaml.YAMLError as e:
           self.logger.critical("Octoflow configuration not correct or YAML syntax not valid")
@@ -181,8 +181,8 @@ class OctoflowConfigHandler(object):
           return True
         else:
           return False
-    except IOError as e:
-      self.logger.critical("Configuration file not accessible from the user")
+    except Exception as e:
+      self.logger.critical("Cannot open configuration file " + conf_file_path + ": " + str(e))
       return False
 
   def write(self):
