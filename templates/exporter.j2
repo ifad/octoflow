@@ -7,4 +7,4 @@ startsecs=5
 stopsignal=KILL
 user=root
 group=root
-command={{ nprobe_bin_path }}/nprobe --collector-port {{ listen_port }} --collector {{ collector_proto }}://{{ collector_host }}:{{ collector_port }} -V {{ collector_version }} --collection-filter '{{ filters|join(',') }}'
+command={{ nprobe_bin_path }}/nprobe --collector-port {{ listen_port }} --collector {{ collector_proto }}://{{ collector_host }}:{{ collector_port }} -V {{ collector_version }} {% for filter in filters %} --collection-filter {{ filter }} {% endfor %}
