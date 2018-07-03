@@ -1,11 +1,10 @@
 general:
   base_confs_path: /etc/octoflow/confs
   base_templates_path: /etc/octoflow/templates
-  base_systemd_path: /etc/systemd/system
+  # base_systemd_path: /etc/systemd/system TODO
 
 nprobe:
   bin_path: /usr/local/bin
-  license_key: /path/to/license/key
 
 supervisor:
   bin_path: /usr/local/bin
