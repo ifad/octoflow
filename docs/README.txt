@@ -5,7 +5,7 @@
 - create a folder readable and writable by the user that will be used from Octoflow, in a path of choice
 - copy inside this folder:
   - the templates folder
-  - the octoflow.yaml global configuration file (or generate one yourself but put in this directory)
+  - the octoflow.yaml global configuration file (or generate one yourself but put it in this directory)
 - inside the same directory create the following folders:
   - confs
   - collector, inside the confs folder
@@ -14,11 +14,13 @@
 Here there is an example of the needed folder structure
 
 			/etc/octoflow/
-			├── confs
+			├── confs/
 			│   ├── collectors
+                        │   │   └── X_collector.yml
 			│   ├── exporters
+                        │   │   └── X_exporter.yml
 			├── octoflow.yaml
-			└── templates
+			└── templates/
 			    ├── collector.j2
 			    ├── exporter.j2
 			    └── supervisord.j2 
